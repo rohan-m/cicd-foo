@@ -1,0 +1,51 @@
+resources:
+- name: google-auth
+  type: solutions.api
+  properties:
+    inputs:
+    - name: org
+      prompt: Edge Org name
+    - name: username
+      prompt: Username
+      ifNotPresent: token
+    - name: password
+      prompt: Password
+      hidden: true
+      ifNotPresent: token
+    - name: env
+      prompt: Edge Org Environment
+
+    configurations:
+    - env: dev
+      edge_host: http://35.196.208.107:8080
+
+    - env: test
+      edge_host: http://35.196.208.107:8080
+
+    - env: stage
+      edge_host: http://35.196.208.107:8080
+
+    - env: prod
+      edge_host: http://35.196.208.107:8080
+
+    edgeOrg:
+    script: gulpfile.js
+    basePath: .
+    subResources:
+    #- name: message_kvm
+    #  type: kvm
+    #  items:
+    #  - name: BankKVM
+    #    payload: '{ "name" : "ServiceAccountEntries", "entry" : [ { "name" : "privateKey", "value" : "{{privateKey}}" } ] , "encrypted": "true"}'
+    #- name: cacheResources
+    #  type: cache
+    #  items:
+    #  - name: access-token
+    #    payload: '{ "name": "access-token"}'
+
+
+    - name: apis
+      type: proxy
+      items:
+      - name: foo
+        apiName: foo
